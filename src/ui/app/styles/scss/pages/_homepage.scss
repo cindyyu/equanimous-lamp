@@ -1,0 +1,50 @@
+homepage {
+	text-align: center;
+	width: 80%;
+
+	h1 {
+		margin-bottom: 1.5em;
+	}
+	input[type=text] {
+		background: $light;
+		padding: .5em 1.25em;
+		width: 20em;
+		max-width: 74%;
+		outline: none;
+	}
+	button {
+		background: $green;
+		color: $white;
+		padding: .75em 0 .5em;
+		width: 3em;
+		max-width: 25%;
+	}
+	modes {
+		display: block;
+		margin-bottom: 2em;
+
+		a {
+			background: lighten($blue, 25%);
+			display: inline-block;
+			font-weight: 700;
+			padding: .75em 1em .5em;
+
+			i.material-icons {
+				display: block;
+				font-size: 3em;
+				margin-bottom: .15em;
+			}
+			&:first-of-type {
+				margin-right: 1em;
+			}
+			&.active {
+				background: $orange;
+				color: $white;
+			}
+			&:hover {
+				background: lighten($blue, 5%);
+				color: $white;
+			}
+		}
+	}
+}

@@ -1,0 +1,66 @@
+from pinject import copy_args_to_internal_fields
+from sqlalchemy.exc import DatabaseError
+from sqlalchemy.types import Float
+
+from model.orm import Spot
+from model.spot import SpotData
+from context.database import session
+from util.rand import random_id
+from util.exception import UsageError
+
+
+class SpotCrudService(object):
+    @copy_args_to_internal_fields
+    def __init__(self):
+        pass
+
+    @staticmethod
+    def get_spot_by_location(longitude, latitude, radius):
+        return session.query(Spot).filter(
+            longitude - radius <= Spot.data['longitude'].cast(Float),
+            Spot.data['longitude'].cast(Float) <= longitude + radius,
+            latitude - radius <= Spot.data['latitude'].cast(Float),
+            Spot.data['latitude'].cast(Float) <= latitude + radius
+        ).all()
+
+    @staticmethod
+    def get_spot(spot_id=None):
+        if spot_id is not None:
+            return session.query(Spot).get(spot_id)
+        return session.query(Spot).all()
+
+    @staticmethod
+    def create_spot(longitude, latitude, price=0, score=0, max_stay=0):
+        arguments = locals()
+        data = SpotData(**arguments)
+        spot_id = random_id(10)
+        while session.query(Spot).get(spot_id) is not None:
+            spot_id = random_id(10)
+        spot = Spot(spot_id, data.to_dict())
+        session.add(spot)
+        session.commit()
+        return spot
+
+    def update_spot(self, spot_id, updated_data):
+        spot = self.get_spot(spot_id)
+        if spot is None:
+            raise UsageError(title='Spot Not Found', detail='Spot with ID %s does not exist.' % spot_id)
+        data = spot.data
+        for field in updated_data:
+            data[field] = updated_data[field]
+        session.query(Spot).filter(Spot.id == spot_id).update({'data': data})
+        session.commit()
+        session.refresh(spot)
+        return spot
+
+    def delete_spot(self, spot_id):
+        spot = self.get_spot(spot_id)
+        if spot is None:
+            raise UsageError(title='Spot Not Found', detail='Spot with ID %s does not exist.' % spot_id)
+        # todo: investigate this a bit more
+        try:
+            session.query(Spot).filter(Spot.id == spot_id).delete()
+            session.commit()
+            return True
+        except DatabaseError:
+            raise UsageError(title='Failed Request', detail='Delete request failed.')

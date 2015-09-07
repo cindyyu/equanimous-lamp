@@ -1,0 +1,25 @@
+input, button {
+	border: 0;
+	height: 3em;
+	line-height: 2em;
+	vertical-align: middle;
+}
+
+input[type=text] {
+	&:focus {
+		background: $white;
+	}
+}
+
+input::-webkit-input-placeholder {
+	color: $grey-dark;
+}
+input::-moz-placeholder {
+	color: $grey-dark;
+}
+input:-moz-placeholder {   /* Older versions of Firefox */
+	color: $grey-dark;
+}
+input:-ms-input-placeholder {
+	color: $grey-dark;
+}

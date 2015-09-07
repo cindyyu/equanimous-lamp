@@ -1,0 +1,133 @@
+results {
+	width: 100%;
+
+	& > * {
+		display: inline-block;
+		height: 100vh;
+		overflow: auto;
+		vertical-align: top;
+	}
+	div#map {
+		background: $white;
+		padding-left: 2em !important;
+	}
+	h1 {
+		color: $blue;
+		text-align: center;
+		margin: .5em 0 1em;
+	}
+	a.new-spot {
+		background: $blue;
+		color: $white;
+		display: block;
+		font-size: 1.5em;
+		margin: 1em auto;
+		padding: .3em;
+		width: 80%;
+		text-align: center;
+
+		.material-icons {
+			vertical-align: middle;
+			margin: 0 .5em .25em;
+		}
+	}
+	form {
+		margin-bottom: 2em;
+		width: 100%;
+
+		input[type=text] {
+			background: lighten($light, 6%);
+			padding: 1em;
+			width: 90%;
+		}
+		button {
+			background: $green;
+			color: $white;
+			width: 10%;
+			padding-top: .75em;
+		}
+	}
+	container {
+		background: $white;
+		padding: 1em 2em !important;
+
+		spots {
+			display: block;
+			margin: 1em 0;
+			padding-left: 0;
+
+			spot {
+				background: lighten($light, 5%);
+				display: block;
+				margin-bottom: 1em;
+				padding: .5em 1em;
+				text-align: center;
+				width: 100%;
+
+				&.selected {
+					background: lighten($blue, 45%);
+				}
+
+				address {
+					margin: 1em 0 .5em;
+					font-size: 1.25em;
+					font-style: normal;
+				}
+				view_address, cost, restrictions {
+					display: inline-block;
+					margin-right: 1em;
+					text-align: center;
+					vertical-align: middle;
+
+					price, max_stay, .material-icons {
+						display: block;
+						font-size: 2em;
+						font-weight: 700;
+						text-align: center;
+					}
+					price {
+						color: $green;
+					}
+					max_stay {
+						color: $blue;
+					}
+					unit, label {
+						display: block;
+					}
+				}
+				view_address {
+					cursor: pointer;
+
+					.material-icons {
+						color: $orange;
+						margin: .4em 0 .25em;
+					}
+					&:hover, &:hover .material-icons {
+						color: $blue;
+					}
+				}
+				score {
+					display: inline-block;
+					font-size: 1.25em;
+					margin-right: 1em;
+					text-align: center;
+					vertical-align: middle;
+
+					button {
+						background: none;
+						display: block;
+						height: auto;
+						padding: 0;
+
+						&:hover, &[disabled] {
+							color: $green;
+						}
+					}
+				}
+				.material-icons {
+					display: block;
+				}
+			}
+		}
+	}
+}
