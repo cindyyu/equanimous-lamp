@@ -8,10 +8,32 @@ new {
 		height: 275px;
 		width: 100%;
 	}
-	h1 a {
-		color: $white;
-	}
 	form {
+		free, paid {
+			display: block;
+			margin: 2em 0;
+		}
+		availability {
+			display: block;
+			margin: 1em 0;
+			text-align: center;
+
+			time {
+				display: block;
+			}
+			day {
+				background: $white;
+				display: inline-block;
+				line-height: 1.5em;
+				margin: 0 2px 1em;
+				padding: .5em;
+
+				&.selected {
+					background: $blue;
+					color: $white;
+				}
+			}
+		}
 		button {
 			background: $green;
 			color: $white;
@@ -24,9 +46,11 @@ new {
 			&[disabled] {
 				background: $grey;
 			}
+			&.selected {
+				background: $green-light;
+			}
 		}
 		label {
-			color: $white;
 			display: block;
 			font-size: 1.5em;
 			margin-top: 1em;
@@ -37,11 +61,11 @@ new {
 			width: 90%
 		}
 		i {
-			background: $orange;
-			color: $white;
+			background: $blue-light;
+			color: $blue;
 			display: inline-block;
-			height: 2em;
-			line-height: 2em !important;
+			height: 1.5em;
+			line-height: 1.5em !important;
 			width: 10%;
 			vertical-align: top;
 			text-align: center;

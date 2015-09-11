@@ -1,21 +1,18 @@
 // typography
-$header-font: 'Sansita One', Helvetica, Arial, sans-serif;
-$body-font: 'Ek Mukta', Helvetica, Arial, sans-serif;
-$emphasis-font: 'Ek Mukta', Helvetica, Arial, sans-serif;
+$header-font: 'Montserrat', Helvetica, Arial, sans-serif;
+$body-font: 'Karla', Helvetica, Arial, sans-serif;
+$emphasis-font: 'Karla', Helvetica, Arial, sans-serif;
 
 body {
-  font-family: $body-font;
-  font-weight: 300;
+	color: $text-color;
+	font: 400 12px $body-font;
 	-webkit-font-smoothing: antialiased;
 	text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
 }
 
 h1, h2, h3, h4, h5 {
-  font-family: $body-font;
+  font-family: $header-font;
   font-weight: 700;
-  margin: 0; 
-}
-
-h1 {
-	font-family: $header-font;
+  margin: 0;
+  text-transform: uppercase;
 }

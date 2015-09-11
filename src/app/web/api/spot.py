@@ -23,7 +23,9 @@ def create_spot():
 def get_spots():
     spots = spot_crud_service.get_spot_by_location(float(request.args.get('longitude')),
                                                    float(request.args.get('latitude')),
-                                                   float(request.args.get('radius'))) \
+                                                   float(request.args.get('radius')),
+                                                   request.args.get('day'),
+                                                   request.args.get('time')) \
         if len(request.args) > 0 else spot_crud_service.get_spot()
     return [spot.to_json_resource() for spot in spots], 200
 

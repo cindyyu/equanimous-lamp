@@ -9,7 +9,7 @@
   <meta name="author" content="">
 
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href='https://fonts.googleapis.com/css?family=Ek+Mukta:400,300,700|Sansita+One' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Montserrat:700|Karla' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="static/css/main.css">
 
   <script src='https://api.mapbox.com/mapbox.js/v2.2.2/mapbox.js'></script>
@@ -32,6 +32,8 @@
   <script src="static/js/lib/ajax.jquery.min.js"></script>
   <script src="static/js/lib/router.js"></script>
   <script src="static/js/lib/secret.js"></script>
+  <script src="static/js/lib/tooltip.js"></script>
+  <script src="static/js/logo.js"></script>
   <script src="static/js/homepage.js"></script>
   <script src="static/js/results.js"></script>
   <script src="static/js/new.js"></script>
@@ -50,6 +52,7 @@
       new Route({tag: 'new'}),
       new Route({tag: 'results'}).routes([
         new Route({path:'/:query', tag: 'results'}),
+        new Route({path:'/:query/:when', tag: 'results'})
       ]),
       new NotFoundRoute({tag: 'not-found'}),
       new RedirectRoute({from: 'u', to: 'users/user'})

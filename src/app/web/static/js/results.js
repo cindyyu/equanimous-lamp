@@ -1,6 +1,19 @@
-riot.tag('results', '<div class="grid__col col--3-of-5" id="map"></div><container class="grid__col col--2-of-5"> <h1 class="logo"> <a href="/"><span class="green-text">Free</span> Parking</a> </h1> <form onsubmit="{ getResults }"> <input type="text" name="location_query" value="{ query }"><button> <i class="material-icons">search</i> </button> </form> <h2>Results</h2> { spots } <p if="{ spots.length == 0 }"> No parking spots found :( Found one?<br > <a href="/#/new" class="new-spot"> <i class="material-icons"> add_circle </i> Add Parking Spot </a> </p> <spots each="{ spots }"> <spot class="{ selected == properties.id ? \'selected\' : \'\' }" onclick="{ selectSpot }"> <score> <button data-id="{ properties.id }" onclick="{ increaseScore }" __disabled="{ properties.delta > 0 }"> <i class="material-icons">keyboard_arrow_up</i> </button> { properties.score } <button data-id="{ properties.id }" onclick="{ decreaseScore }" __disabled="{ properties.delta < 0 }"> <i class="material-icons">keyboard_arrow_down</i> </button> </score> <cost> <price>${ properties.price }</price> <unit>per hour</unit> </cost> <restrictions> <max_stay>{ properties.max_stay ? properties.max_stay : \'n/a\' }</max_stay> <label>hours max</label> </restrictions> <view_address onclick="{ view_address }"> <i class="material-icons">location_on</i> get address </view_address> <address if="{ properties.address }"> { properties.address } </address> </spot> </spots> </container>', 'class="grid grid--no-gutter"', function(opts) {
+riot.tag('results', '<div class="grid__col col--3-of-5" id="map"></div><container class="grid__col col--2-of-5"> <logo ></logo> <form onsubmit="{ getResults }"> <input type="text" name="location_query" value="{ query }"><button> <i class="material-icons">search</i> </button> </form> <h2>Results</h2> <p if="{ spots.length == 0 }"> No parking spots found :( Found one?<br > <a href="/#/new" class="new-spot"> <i class="material-icons"> add_circle </i> Add Parking Spot </a> </p> <spots each="{ spots }"> <spot class="{ selected == properties.id ? \'selected\' : \'\' }" onclick="{ selectSpot }"> <score> <button data-id="{ properties.id }" onclick="{ increaseScore }" __disabled="{ properties.delta > 0 }"> <i class="material-icons">keyboard_arrow_up</i> </button> { properties.score } <button data-id="{ properties.id }" onclick="{ decreaseScore }" __disabled="{ properties.delta < 0 }"> <i class="material-icons">keyboard_arrow_down</i> </button> </score> <cost> <price>${ properties.price }</price> <unit>per hour</unit> </cost> <restrictions> <max_stay>{ properties.max_stay ? properties.max_stay : \'n/a\' }</max_stay> <label>hours max</label> </restrictions> <view_address onclick="{ view_address }"> <i class="material-icons">location_on</i> get address </view_address> <address if="{ properties.address }"> { properties.address } </address> </spot> </spots> </container>', 'class="grid grid--no-gutter"', function(opts) {
   	self = this
   	self.query = riot.router.current.params.query;
+
+  	params = self.query.split('&')
+  	for (i in params) {
+  		param = params[i]
+  		if (i == 0) {
+  			self.query = param
+  		} else {
+  			k = param.split('=')[0]
+  			v = param.split('=')[1]
+  			self[k] = v
+  		}
+  	}
+
 		self.location;
 		self.selected;
 
@@ -103,8 +116,13 @@ riot.tag('results', '<div class="grid__col col--3-of-5" id="map"></div><containe
 
 					self.spots = []
 
+					url = '/api/1/spots?longitude=' + self.location.longitude + '&latitude=' + self.location.latitude + '&radius=.05'
+					if (self.day && self.time) {
+						url += '&day=' + self.day + '&time=' + self.time
+					}
+
 					$.ajax({
-						url: '/api/1/spots?longitude=' + self.location.longitude + '&latitude=' + self.location.latitude + '&radius=.05',
+						url: url,
 						method: 'get',
 						success: function(response) {
 							results = response.data

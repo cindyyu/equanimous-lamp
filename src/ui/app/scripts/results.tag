@@ -1,16 +1,13 @@
 <results class='grid grid--no-gutter'>
 
 	<div class='grid__col col--3-of-5' id='map'></div><container class='grid__col col--2-of-5'>
-		<h1 class='logo'>
-			<a href='/'><span class='green-text'>Free</span> Parking</a>
-		</h1>
+		<logo />
 		<form onsubmit={ getResults }>
 			<input type='text' name='location_query' value={ query } /><button>
 				<i class='material-icons'>search</i>
 			</button>
 		</form>
 		<h2>Results</h2>
-		{ spots }
 		<p if={ spots.length == 0 }>
 			No parking spots found :( Found one?<br />
 			<a href='/#/new' class='new-spot'>
@@ -53,6 +50,19 @@
   <script>
   	self = this
   	self.query = riot.router.current.params.query;
+
+  	params = self.query.split('&')
+  	for (i in params) {
+  		param = params[i]
+  		if (i == 0) {
+  			self.query = param
+  		} else {
+  			k = param.split('=')[0]
+  			v = param.split('=')[1]
+  			self[k] = v
+  		}
+  	}
+
 		self.location;
 		self.selected;
 
@@ -155,8 +165,13 @@
 
 					self.spots = []
 
+					url = '/api/1/spots?longitude=' + self.location.longitude + '&latitude=' + self.location.latitude + '&radius=.05'
+					if (self.day && self.time) {
+						url += '&day=' + self.day + '&time=' + self.time
+					}
+
 					$.ajax({
-						url: '/api/1/spots?longitude=' + self.location.longitude + '&latitude=' + self.location.latitude + '&radius=.05',
+						url: url,
 						method: 'get',
 						success: function(response) {
 							results = response.data

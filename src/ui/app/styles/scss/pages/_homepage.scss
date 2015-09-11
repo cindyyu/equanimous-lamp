@@ -2,11 +2,11 @@ homepage {
 	text-align: center;
 	width: 80%;
 
-	h1 {
+	logo {
 		margin-bottom: 1.5em;
 	}
 	input[type=text] {
-		background: $light;
+		background: $med;
 		padding: .5em 1.25em;
 		width: 20em;
 		max-width: 74%;
@@ -15,16 +15,42 @@ homepage {
 	button {
 		background: $green;
 		color: $white;
-		padding: .75em 0 .5em;
+		padding: .5em 0;
 		width: 3em;
 		max-width: 25%;
+	}
+	specific_time {
+		margin: 2em 0;
+		display: block;
+	}
+	when {
+		margin: 2em 2em 2em 0;
+
+		input[type=radio] {
+			background: red;
+		}
+		button {
+			background: $white;
+			color: $text-color;
+			font-weight: 700;
+			padding: .5em 1em;
+			width: auto;
+
+			&:last-of-type {
+				margin-left: 1em;
+			}
+			&.selected {
+				background: $blue;
+				color: $white;
+			}
+		}
 	}
 	modes {
 		display: block;
 		margin-bottom: 2em;
 
 		a {
-			background: lighten($blue, 25%);
+			background: $white;
 			display: inline-block;
 			font-weight: 700;
 			padding: .75em 1em .5em;
@@ -38,7 +64,7 @@ homepage {
 				margin-right: 1em;
 			}
 			&.active {
-				background: $orange;
+				background: $green;
 				color: $white;
 			}
 			&:hover {

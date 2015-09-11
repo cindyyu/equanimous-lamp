@@ -1,0 +1,1 @@
+weekdays = ['sun', 'mon', 'tues', 'wed', 'thu', 'fri', 'sat']

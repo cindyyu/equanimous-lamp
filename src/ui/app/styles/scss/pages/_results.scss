@@ -48,7 +48,7 @@ results {
 		}
 	}
 	container {
-		background: $white;
+		background: $light;
 		padding: 1em 2em !important;
 
 		spots {
@@ -57,7 +57,7 @@ results {
 			padding-left: 0;
 
 			spot {
-				background: lighten($light, 5%);
+				background: lighten($light, 2%);
 				display: block;
 				margin-bottom: 1em;
 				padding: .5em 1em;
@@ -65,7 +65,7 @@ results {
 				width: 100%;
 
 				&.selected {
-					background: lighten($blue, 45%);
+					background: $white;
 				}
 
 				address {
@@ -83,6 +83,7 @@ results {
 						display: block;
 						font-size: 2em;
 						font-weight: 700;
+						margin: .4em 0 .25em;
 						text-align: center;
 					}
 					price {
@@ -99,8 +100,7 @@ results {
 					cursor: pointer;
 
 					.material-icons {
-						color: $orange;
-						margin: .4em 0 .25em;
+						color: $green;
 					}
 					&:hover, &:hover .material-icons {
 						color: $blue;

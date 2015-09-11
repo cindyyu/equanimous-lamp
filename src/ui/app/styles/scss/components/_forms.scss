@@ -3,23 +3,29 @@ input, button {
 	height: 3em;
 	line-height: 2em;
 	vertical-align: middle;
+	outline: none;
 }
 
 input[type=text] {
-	&:focus {
-		background: $white;
-	}
+	background: $white;
 }
 
 input::-webkit-input-placeholder {
-	color: $grey-dark;
+	color: $text-color;
 }
 input::-moz-placeholder {
-	color: $grey-dark;
+	color: $text-color;
 }
 input:-moz-placeholder {   /* Older versions of Firefox */
-	color: $grey-dark;
+	color: $text-color;
 }
 input:-ms-input-placeholder {
-	color: $grey-dark;
+	color: $text-color;
+}
+
+select {
+	background: $white;
+	border: none;
+	display: inline-block;
+	font-size: 1.25em;
 }

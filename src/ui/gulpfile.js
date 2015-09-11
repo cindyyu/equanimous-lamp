@@ -9,7 +9,7 @@ var gulp = require('gulp'),
 
 gulp.task('browser-sync', function() {
 	browserSync.init({
-		proxy: "localhost:5000"
+		proxy: "localhost:4000"
 	});
 });
 

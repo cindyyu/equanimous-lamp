@@ -1,9 +1,13 @@
 // primary site colors
-$blue: #479997;
-$green: #82B242;
-$orange: #E9AE4A;
-$yellow: #F3EB02;
-$light: #E4E5E7;
+$blue: #95D1DA;
+$green: #72B29A;
+$blue-light: #E2F5F5;
+$green-light: #9AE3BC;
+$light: #F3F8F3;
+$med: darken($light, 5%);
+
+$red-light: #FFE4E1;
+$red: #B3432B;
 
 // monochromatic
 $white: #fff;
@@ -15,4 +19,4 @@ $grey-light: lighten($grey, 25%);
 $grey-super-dark: darken($grey, 20%);
 $grey-super-light: lighten($grey, 33%);
 
-$text-color: $grey-super-dark;
+$text-color: darken($blue, 50%);

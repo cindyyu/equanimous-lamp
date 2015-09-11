@@ -1,12 +1,14 @@
 from pinject import copy_args_to_internal_fields
 from sqlalchemy.exc import DatabaseError
-from sqlalchemy.types import Float
+from sqlalchemy.types import Float, Integer
+from datetime import datetime
 
 from model.orm import Spot
 from model.spot import SpotData
 from context.database import session
 from util.rand import random_id
 from util.exception import UsageError
+from util.date import weekdays
 
 
 class SpotCrudService(object):
@@ -15,13 +17,37 @@ class SpotCrudService(object):
         pass
 
     @staticmethod
-    def get_spot_by_location(longitude, latitude, radius):
-        return session.query(Spot).filter(
+    def get_spot_by_location(longitude,
+                             latitude,
+                             radius,
+                             day,
+                             time):
+        now = datetime.now()
+        if day is None:
+            day = weekdays[now.weekday()]
+        if time is None:
+            time = now.strftime('%H%M')
+        time = int(time)
+
+        spots = session.query(Spot).filter(
             longitude - radius <= Spot.data['longitude'].cast(Float),
             Spot.data['longitude'].cast(Float) <= longitude + radius,
             latitude - radius <= Spot.data['latitude'].cast(Float),
             Spot.data['latitude'].cast(Float) <= latitude + radius
         ).all()
+
+        results = []
+        for spot in spots:
+            beg = spot.data['availability'][day]['beg']
+            end = spot.data['availability'][day]['end']
+            if beg is None and end is None:
+                results.append(spot)
+            else:
+                beg = int(beg)
+                end = int(end)
+                if time > end or time < beg:
+                    results.append(spot)
+        return results
 
     @staticmethod
     def get_spot(spot_id=None):
@@ -39,7 +65,6 @@ class SpotCrudService(object):
                     origin='user'):
         arguments = locals()
         data = SpotData(**arguments)
-        print data.to_dict()
         spot_id = random_id(10)
         while session.query(Spot).get(spot_id) is not None:
             spot_id = random_id(10)
