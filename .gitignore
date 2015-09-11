@@ -1,4 +1,4 @@
-src/app/configuration/local.yaml
 venv
+src/app/configuration/prod.yaml
+src/app/configuration/local.yaml
 *.pyc
-app/config/local.yaml

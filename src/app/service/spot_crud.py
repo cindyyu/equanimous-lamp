@@ -30,9 +30,16 @@ class SpotCrudService(object):
         return session.query(Spot).all()
 
     @staticmethod
-    def create_spot(longitude, latitude, price=0, score=0, max_stay=0):
+    def create_spot(longitude,
+                    latitude,
+                    price=0,
+                    score=0,
+                    max_stay=None,
+                    availability=[],
+                    origin='user'):
         arguments = locals()
         data = SpotData(**arguments)
+        print data.to_dict()
         spot_id = random_id(10)
         while session.query(Spot).get(spot_id) is not None:
             spot_id = random_id(10)

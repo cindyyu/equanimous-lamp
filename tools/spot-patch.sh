@@ -14,4 +14,4 @@ curl --header "Content-Type:application/json" \
  		}
  	}
  ' \
- http://127.0.0.1:5000/api/1/spots/ZO100L4IZ0
+ http://127.0.0.1:4000/api/1/spots/ZO100L4IZ0
