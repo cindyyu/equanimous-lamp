@@ -57,7 +57,7 @@
 
   <script>
   	self = this
-  	self.query = riot.router.current.params.query;
+  	self.query = riot.router.current.params.query
 
   	params = self.query.split('&')
   	for (i in params) {
@@ -85,16 +85,18 @@
 		}
 
 		view_address = function(e) {
-			coordinates = e.item.geometry.coordinates
-			geocoder.geocode({location: {
-																		lng: parseFloat(coordinates[0]),
-																		lat: parseFloat(coordinates[1])
-																	}}, function(response) {
-																		if (response.length > 0) {
-																			e.item.properties.address = response[0].formatted_address
-																			self.update()
-																		}
-																	})
+			if (e.item.properties.address == null) {
+				coordinates = e.item.geometry.coordinates
+				geocoder.geocode({location: {
+																			lng: parseFloat(coordinates[0]),
+																			lat: parseFloat(coordinates[1])
+																		}}, function(response) {
+																			if (response.length > 0) {
+																				e.item.properties.address = response[0].formatted_address
+																				self.update()
+																			}
+																		})
+			}
 		}
 
 		selectSpot = function(e) {
@@ -201,7 +203,8 @@
 										'score': result.attributes.score,
 										'price': result.attributes.price,
 										'max_stay': result.attributes.max_stay,
-										'availability': result.attributes.availability
+										'availability': result.attributes.availability,
+										'address': result.attributes.address
 									}
 								})
 							}
@@ -231,10 +234,11 @@
 							featureLayer.eachLayer(function(layer) {
 								props = layer.feature.properties
 								var content = '<p>'
+								if (props.address) content += '<b>' + props.address + '</b>'
 								if (props.max_stay) content += 'Max Stay: ' + props.max_stay + ' hrs<br />'
 								if (props.price) content += 'Costs $' + props.price + ' per hour'
 								content += '</p>'
-								if (props.id && (props.max_stay || props.price)) layer.bindPopup(content)
+								if (props.id) layer.bindPopup(content)
 							})
 						}
 					});

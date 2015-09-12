@@ -2,7 +2,7 @@ from model.base import Base
 
 
 class SpotData(Base):
-    """longitude, latitude, price, score, max_stay, availability, origin"""
+    """longitude, latitude, price, score, max_stay, availability, origin, address"""
     def __init__(self,
                  longitude,
                  latitude,
@@ -10,7 +10,8 @@ class SpotData(Base):
                  score=0,
                  max_stay=None,
                  availability=[],
-                 origin='user'):
+                 origin='user',
+                 address=None):
         Base.__init__(self)
         self.longitude = longitude
         self.latitude = latitude
@@ -19,3 +20,4 @@ class SpotData(Base):
         self.max_stay = max_stay
         self.availability = availability
         self.origin = origin
+        self.address = address

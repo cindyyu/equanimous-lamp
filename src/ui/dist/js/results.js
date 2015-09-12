@@ -1,6 +1,6 @@
 riot.tag('results', '<div class="grid__col col--3-of-5" id="map"></div><container class="grid__col col--2-of-5"> <logo ></logo> <form onsubmit="{ getResults }"> <input type="text" name="location_query" value="{ query }"><button> <i class="material-icons">search</i> </button> </form> <h2>Results</h2> <p if="{ spots.length == 0 }"> No parking spots found :( Found one?<br > <a href="/#/new" class="new-spot"> <i class="material-icons"> add_circle </i> Add Parking Spot </a> </p> <spots each="{ spots }"> <spot class="{ selected == properties.id ? \'selected\' : \'\' }" onclick="{ selectSpot }"> <score> <button data-id="{ properties.id }" onclick="{ increaseScore }" __disabled="{ properties.delta > 0 }"> <i class="material-icons">keyboard_arrow_up</i> </button> { properties.score } <button data-id="{ properties.id }" onclick="{ decreaseScore }" __disabled="{ properties.delta < 0 }"> <i class="material-icons">keyboard_arrow_down</i> </button> </score> <cost> <paid if="{ properties.availability[self.day].beg <= parseInt(self.time) && parseInt(self.time) < properties.availability[self.day].end }"> <price>${ properties.price }</price> <unit>per hour</unit> </paid> <free if="{ properties.availability[self.day].beg > parseInt(self.time) || parseInt(self.time) >= properties.availability[self.day].end }"> <price>free</price> <unit>at this time</unit> </free> </cost> <restrictions> <max_stay>{ properties.max_stay ? properties.max_stay : \'n/a\' }</max_stay> <label>hours max</label> </restrictions> <view_address onclick="{ view_address }"> <icon> <i class="material-icons">location_on</i> </icon> <label>get address</label> </view_address> <address if="{ properties.address }"> { properties.address } </address> </spot> </spots> </container>', 'class="grid grid--no-gutter"', function(opts) {
   	self = this
-  	self.query = riot.router.current.params.query;
+  	self.query = riot.router.current.params.query
 
   	params = self.query.split('&')
   	for (i in params) {
@@ -28,16 +28,18 @@ riot.tag('results', '<div class="grid__col col--3-of-5" id="map"></div><containe
 		}
 
 		view_address = function(e) {
-			coordinates = e.item.geometry.coordinates
-			geocoder.geocode({location: {
-																		lng: parseFloat(coordinates[0]),
-																		lat: parseFloat(coordinates[1])
-																	}}, function(response) {
-																		if (response.length > 0) {
-																			e.item.properties.address = response[0].formatted_address
-																			self.update()
-																		}
-																	})
+			if (e.item.properties.address == null) {
+				coordinates = e.item.geometry.coordinates
+				geocoder.geocode({location: {
+																			lng: parseFloat(coordinates[0]),
+																			lat: parseFloat(coordinates[1])
+																		}}, function(response) {
+																			if (response.length > 0) {
+																				e.item.properties.address = response[0].formatted_address
+																				self.update()
+																			}
+																		})
+			}
 		}
 
 		selectSpot = function(e) {
@@ -144,7 +146,8 @@ riot.tag('results', '<div class="grid__col col--3-of-5" id="map"></div><containe
 										'score': result.attributes.score,
 										'price': result.attributes.price,
 										'max_stay': result.attributes.max_stay,
-										'availability': result.attributes.availability
+										'availability': result.attributes.availability,
+										'address': result.attributes.address
 									}
 								})
 							}
@@ -174,10 +177,11 @@ riot.tag('results', '<div class="grid__col col--3-of-5" id="map"></div><containe
 							featureLayer.eachLayer(function(layer) {
 								props = layer.feature.properties
 								var content = '<p>'
+								if (props.address) content += '<b>' + props.address + '</b>'
 								if (props.max_stay) content += 'Max Stay: ' + props.max_stay + ' hrs<br />'
 								if (props.price) content += 'Costs $' + props.price + ' per hour'
 								content += '</p>'
-								if (props.id && (props.max_stay || props.price)) layer.bindPopup(content)
+								if (props.id) layer.bindPopup(content)
 							})
 						}
 					});

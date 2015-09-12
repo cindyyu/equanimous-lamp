@@ -38,7 +38,8 @@ class SpotCrudService(object):
                     score=0,
                     max_stay=None,
                     availability=[],
-                    origin='user'):
+                    origin='user',
+                    address=None):
         arguments = locals()
         data = SpotData(**arguments)
         spot_id = random_id(10)

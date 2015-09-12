@@ -7,8 +7,9 @@ curl --header "Content-Type:application/json" \
  		"data": {
  			"type": "spots",
  			"attributes": {
- 				"longitude": 35,
- 				"latitude": 25,
+ 				"address": "11341 jasper yo",
+ 				"longitude": -96.78020970000001,
+ 				"latitude": 33.185935799999996,
  				"price": 0,
  				"origin": "user",
  				"availability": {
