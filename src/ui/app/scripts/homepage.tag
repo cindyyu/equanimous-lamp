@@ -30,13 +30,7 @@
 			<specific_time if={ when == 'some other time' }>
 				<select name='day'>
 					<option selected disabled>Select Day</option>
-					<option value='sun'>Sunday</option>
-					<option value='mon'>Monday</option>
-					<option value='tue'>Tuesday</option>
-					<option value='wed'>Wednesday</option>
-					<option value='thu'>Thursday</option>
-					<option value='fri'>Friday</option>
-					<option value='sat'>Saturday</option>
+					<option each={ days } value={ abbrev }>{ full }</option>
 				</select>
 				at
 				<select name='hour'>
@@ -53,6 +47,16 @@
 	<script>
 		self.mode = 'find'
 		self.when = 'now'
+
+		self.days = [
+			{abbrev: 'sun', full: 'Sunday'},
+			{abbrev: 'mon', full: 'Monday'},
+			{abbrev: 'tue', full: 'Tuesday'},
+			{abbrev: 'wed', full: 'Wednesday'},
+			{abbrev: 'thu', full: 'Thursday'},
+			{abbrev: 'fri', full: 'Friday'},
+			{abbrev: 'sat', full: 'Saturday'}
+		]
 
 		toggleWhen = function(e) {
 			e.preventDefault()
@@ -100,11 +104,14 @@
 				day = e.target.day.value
 				hour = e.target.hour.value
 				minute = e.target.minute.value
+			} else {
+			  now = new Date()
+				day = self.days[now.getDay()].abbrev
+				hour = now.getHours()
+				minute = now.getMinutes()
 			}
 			url = '/results/' + encodeURI(location_query)
-			if (self.when == 'some other time') {
-				url += '&day=' + encodeURI(day) + '&time=' + encodeURI(hour + minute)
-			}
+			url += '&day=' + encodeURI(day) + '&time=' + hour + minute
 			riot.route(url)
 		}
 	</script>

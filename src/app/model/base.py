@@ -34,7 +34,7 @@ class DaoBase(object):
         return {
             'type': 'spots',
             'id': self.id,
-            'attributes': self.data
+            'attributes': self.data,
         }
 
 

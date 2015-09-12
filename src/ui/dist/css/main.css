@@ -392,7 +392,7 @@ th {
 
 body {
   color: #1d4c53;
-  font: 400 12px "Karla", Helvetica, Arial, sans-serif;
+  font: 400 13px "Karla", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004); }
 
@@ -798,21 +798,25 @@ results {
           font-style: normal; }
         results container spots spot view_address, results container spots spot cost, results container spots spot restrictions {
           display: inline-block;
-          margin-right: 1em;
+          padding: 1.5em 0;
           text-align: center;
           vertical-align: middle; }
-          results container spots spot view_address price, results container spots spot view_address max_stay, results container spots spot view_address .material-icons, results container spots spot cost price, results container spots spot cost max_stay, results container spots spot cost .material-icons, results container spots spot restrictions price, results container spots spot restrictions max_stay, results container spots spot restrictions .material-icons {
+          results container spots spot view_address price, results container spots spot view_address max_stay, results container spots spot view_address icon, results container spots spot cost price, results container spots spot cost max_stay, results container spots spot cost icon, results container spots spot restrictions price, results container spots spot restrictions max_stay, results container spots spot restrictions icon {
             display: block;
             font-size: 2em;
             font-weight: 700;
-            margin: 0.4em 0 0.25em;
+            margin-bottom: .25em;
             text-align: center; }
           results container spots spot view_address price, results container spots spot cost price, results container spots spot restrictions price {
-            color: #72B29A; }
+            color: #72B29A;
+            text-transform: uppercase; }
+          results container spots spot view_address icon, results container spots spot cost icon, results container spots spot restrictions icon {
+            margin-bottom: .4em; }
           results container spots spot view_address max_stay, results container spots spot cost max_stay, results container spots spot restrictions max_stay {
             color: #95D1DA; }
           results container spots spot view_address unit, results container spots spot view_address label, results container spots spot cost unit, results container spots spot cost label, results container spots spot restrictions unit, results container spots spot restrictions label {
-            display: block; }
+            display: block;
+            padding: 0 1em; }
         results container spots spot view_address {
           cursor: pointer; }
           results container spots spot view_address .material-icons {

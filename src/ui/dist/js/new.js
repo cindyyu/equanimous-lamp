@@ -57,13 +57,16 @@ riot.tag('new', '<logo ></logo> <form class="grid" onsubmit="{ addSpot }"> <div 
 		addSpot = function(e) {
 			attributes = {
 				longitude: parseFloat(e.target.longitude.value),
-				latitude: parseFloat(e.target.latitude.value)
+				latitude: parseFloat(e.target.latitude.value),
+				price: 0
 			}
 			fieldsToCheck = ['price', 'max_stay']
 			for (i in fieldsToCheck) {
 				field = fieldsToCheck[i]
-				parsedFloat = parseFloat(e.target[field].value)
-				attributes[field] = isNaN(parsedFloat) ? null : parsedFloat
+				if (e.target[field]) {
+					parsedFloat = parseFloat(e.target[field].value)
+					attributes[field] = isNaN(parsedFloat) ? null : parsedFloat
+				}
 			}
 
 			availability = {}
@@ -71,8 +74,8 @@ riot.tag('new', '<logo ></logo> <form class="grid" onsubmit="{ addSpot }"> <div 
 				day = self.days[i]
 				times = {}
 				if (day.selected) {
-					times.beg = self.beg_hour + self.beg_min
-					times.end = self.end_hour + self.end_min
+					times.beg = parseInt(self.beg_hour + self.beg_min)
+					times.end = parseInt(self.end_hour + self.end_min)
 				} else {
 					times.beg = null
 					times.end = null

@@ -29,16 +29,24 @@
 					</button>
 				</score>
 				<cost>
-					<price>${ properties.price }</price>
-					<unit>per hour</unit>
+					<paid if={ properties.availability[self.day].beg <= parseInt(self.time) && parseInt(self.time) < properties.availability[self.day].end }>
+						<price>${ properties.price }</price>
+						<unit>per hour</unit>
+					</paid>
+					<free if={ properties.availability[self.day].beg > parseInt(self.time) || parseInt(self.time) >= properties.availability[self.day].end }>
+						<price>free</price>
+						<unit>at this time</unit>
+					</free>
 				</cost>
 				<restrictions>
 					<max_stay>{ properties.max_stay ? properties.max_stay : 'n/a' }</max_stay>
 					<label>hours max</label>
 				</restrictions>
 				<view_address onclick={ view_address }>
-					<i class='material-icons'>location_on</i>
-					get address
+					<icon>
+						<i class='material-icons'>location_on</i>
+					</icon>
+					<label>get address</label>
 				</view_address>
 				<address if={ properties.address }>
 					{ properties.address }
@@ -192,7 +200,8 @@
       							'delta': 0,
 										'score': result.attributes.score,
 										'price': result.attributes.price,
-										'max_stay': result.attributes.max_stay
+										'max_stay': result.attributes.max_stay,
+										'availability': result.attributes.availability
 									}
 								})
 							}
