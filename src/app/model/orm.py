@@ -1,5 +1,4 @@
 from context.database import db
-
 from model.base import DaoBase
 
 
