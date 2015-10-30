@@ -31,14 +31,14 @@ riot.tag('results', '<div class="grid__col col--3-of-5" id="map"></div><containe
 			if (e.item.properties.address == null) {
 				coordinates = e.item.geometry.coordinates
 				geocoder.geocode({location: {
-																			lng: parseFloat(coordinates[0]),
-																			lat: parseFloat(coordinates[1])
-																		}}, function(response) {
-																			if (response.length > 0) {
-																				e.item.properties.address = response[0].formatted_address
-																				self.update()
-																			}
-																		})
+												lng: parseFloat(coordinates[0]),
+												lat: parseFloat(coordinates[1])
+											}}, function(response) {
+												if (response.length > 0) {
+													e.item.properties.address = response[0].formatted_address
+													self.update()
+												}
+											})
 			}
 		}
 
@@ -105,16 +105,19 @@ riot.tag('results', '<div class="grid__col col--3-of-5" id="map"></div><containe
 			geocoder.geocode({'address': self.query}, function(results, status) {
 				if (status === google.maps.GeocoderStatus.OK) {
 					self.location = {
-						longitude: results[0].geometry.location.K,
-						latitude: results[0].geometry.location.G
+						longitude: results[0].geometry.location.lng(),
+						latitude: results[0].geometry.location.lat()
 					}
+
+					console.log(results[0].geometry.location.lat())
+
 					map = L.mapbox.map('map',
-														 'mapbox.streets',
-														 {
-															 center: [self.location.latitude, self.location.longitude],
-															 zoom: 16
-														 }
-														)
+									   'mapbox.streets',
+									   {
+								  		   center: [self.location.latitude, self.location.longitude],
+								  		   zoom: 16
+									   }
+									  )
 
 					self.spots = []
 
