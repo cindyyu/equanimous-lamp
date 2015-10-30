@@ -2,10 +2,10 @@ FROM ubuntu
 
 MAINTAINER cindyy
 
-RUN perl -p -i.orig -e 's/archive.ubuntu.com/mirrors.aliyun.com\/ubuntu/' /etc/apt/sources.list
+# RUN perl -p -i.orig -e 's/archive.ubuntu.com/mirrors.aliyun.com\/ubuntu/' /etc/apt/sources.list
 RUN apt-get update
 RUN apt-get install -y build-essential git
-RUN apt-get install -y python python-dev home python-distribute python-pip python-setuptools
+RUN apt-get install -y python python-dev python-distribute python-pip python-setuptools
 RUN apt-get install -y nginx supervisor
 RUN easy_install pip
 
@@ -13,7 +13,7 @@ RUN easy_install pip
 RUN pip install uwsgi
 
 # install nginx
-RUN apt-get install -y software-properties-common python-software-properties
+RUN apt-get install -y software-properties-common python-software-properties libpq-dev
 RUN apt-get update
 RUN add-apt-repository -y ppa:nginx/stable
 
